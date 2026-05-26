@@ -254,40 +254,54 @@ a { color: inherit; text-decoration: none; }
 .card__media {
   position: relative;
   aspect-ratio: 16 / 10;
-  background: linear-gradient(135deg, var(--g1, #1a1d28) 0%, var(--g2, #d4b97c) 180%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin: 0;
+  background: var(--tint, #11141c);
+  display: block;
   overflow: hidden;
+  isolation: isolate;
 }
-.card__media::before {
-  content: '';
+.card__media img {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.18), transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(0, 0, 0, 0.35), transparent 50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.7s var(--ease), filter 0.5s var(--ease);
+  filter: saturate(0.92) contrast(1.02);
+  will-change: transform;
+}
+.card:hover .card__media img {
+  transform: scale(1.04);
+  filter: saturate(1) contrast(1.05);
 }
 .card__media::after {
   content: '';
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(transparent 95%, rgba(255, 255, 255, 0.05) 95%),
-    linear-gradient(90deg, transparent 95%, rgba(255, 255, 255, 0.05) 95%);
-  background-size: 24px 24px;
-  opacity: 0.6;
-}
-.card__glyph {
-  position: relative;
-  font-family: var(--font-display);
-  font-size: clamp(4rem, 8vw, 6.5rem);
-  color: rgba(255, 255, 255, 0.85);
-  text-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+  background:
+    linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.35) 100%),
+    linear-gradient(135deg, color-mix(in srgb, var(--tint, #11141c) 38%, transparent) 0%, transparent 55%);
+  pointer-events: none;
   z-index: 1;
-  transition: transform 0.5s var(--ease);
+  transition: opacity 0.4s var(--ease);
 }
-.card:hover .card__glyph { transform: scale(1.1) rotate(-4deg); }
+.card:hover .card__media::after { opacity: 0.55; }
+.card__badge {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.9rem;
+  z-index: 2;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--c-bg);
+  background: var(--c-accent);
+  padding: 0.32rem 0.7rem;
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
 
 .card__body {
   padding: 1.6rem 1.6rem 1.8rem;
